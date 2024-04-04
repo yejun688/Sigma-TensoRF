@@ -41,9 +41,12 @@ def export_mesh(args):
     kwargs.update({'device': device})
     kwargs['init_rank'] = args.init_rank
     kwargs['rank_inc'] = args.rank_inc
+    # 根据模型名称创建模型对象,使用 kwargs 字典作为关键字参数传递给模型构造函数，以便模型可以根据预训练参数进行初始化
     tensorf = eval(args.model_name)(**kwargs)
     tensorf.load(ckpt)
+    # 方法获取体素网格的密度值和不透明度
     alpha,_ = tensorf.getDenseAlpha()
+    # 函数将密度值和不透明度为.ply 格式的表面网格
     convert_sdf_samples_to_ply(alpha.cpu(), f'{args.ckpt[:-3]}.ply',bbox=tensorf.aabb.cpu(), level=0.005)
     raise Exception('Mesh Exported!')
 @torch.no_grad()
@@ -251,6 +254,7 @@ def reconstruction(args):
 if __name__ == '__main__':
     args = config_parser()
     print(args)
+    # rank
     init_rank=args.init_rank
     rank_inc=args.rank_inc
     if args.export_mesh:
