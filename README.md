@@ -1,11 +1,10 @@
 # Sigma-TensoRF
-YEJUN
 
-SJTU IRMV Lab
 ## Installing Requirements
+
 '''
-conda create -n SigmaRF python
-conda activate SigmaRF
+conda create -n SigmaRF python==3.8 \
+conda activate SigmaRF \
 pip install -r requirements.txt
 '''
 
